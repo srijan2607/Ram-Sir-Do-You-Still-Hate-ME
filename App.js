@@ -1,14 +1,31 @@
 const express = require("express");
-const app = express();
+const http = require("http");
+const { Server } = require("socket.io");
+const { v4: uuid } = require("uuid");
 
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+
+app.set("view engine", "ejs");
+app.use(express.static("public"));
 app.use(express.json());
 
+// Routes
 app.get("/", (req, res) => {
-  res.status(200).json({ msg: "Hello World!" });
+  res.redirect(`/${uuid()}`);
+});
+
+app.get("/:roomId", (req, res) => {
+  res.render("room", { roomId: req.params.roomId });
+});
+
+io.on("join-room", (roomId) => {
+  socket.to(roomId).broadcast.emit("user-connected");
+  socket.join(roomId);
 });
 
 const port = process.env.PORT || 4000;
-
-app.listen(port, () => {
-  console.log(`listening on port ${port}`);
+server.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
