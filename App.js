@@ -19,10 +19,11 @@ app.get("/", (req, res) => {
 app.get("/:roomId", (req, res) => {
   res.render("room", { roomId: req.params.roomId });
 });
-
-io.on("join-room", (roomId) => {
-  socket.to(roomId).broadcast.emit("user-connected");
-  socket.join(roomId);
+io.on("connection", (socket) => {
+  socket.on("join-room", (roomId) => {
+    socket.join(roomId);
+    socket.to(roomId).emit("user-connected");
+  });
 });
 
 const port = process.env.PORT || 4000;

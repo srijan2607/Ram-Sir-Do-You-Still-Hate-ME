@@ -12,18 +12,10 @@ navigator.mediaDevices
   })
   .then((stream) => {
     myVideoStream = stream;
-
     addVideoStream(myVideo, stream);
-
-    socket.on("user-connected", (userId) => {
-      console.log("User connected:", userId);
-    });
-  })
-  .catch((err) => {
-    console.error("Error accessing media devices:", err);
   });
 
-socket.emit("join-room", roomId);
+socket.emit("join-room", ROOM_ID);
 
 socket.on("user-connected", () => {
   connectToNewUser();
