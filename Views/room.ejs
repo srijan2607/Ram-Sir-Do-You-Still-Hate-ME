@@ -38,28 +38,29 @@
   </head>
   <body>
     <div class="main">
-      <!-- Left section for videos -->
       <div class="main__left">
         <div class="main__videos">
           <div id="Video-grid"></div>
         </div>
       </div>
 
-      <!-- Controls section -->
       <div class="main__controls">
-        <!-- First block for microphone and video -->
         <div class="main__controls__block">
-          <div class="main__controls__button">
+          <div
+            onclick="muteUnmute()"
+            class="main__controls__button main_mute_button"
+          >
             <i class="fas fa-microphone"></i>
             <span>Mute</span>
           </div>
-          <div class="main__controls__button">
+          <div
+            onclick="playStop()"
+            class="main__controls__button main_video_button"
+          >
             <i class="fas fa-video"></i>
             <span>Stop Video</span>
           </div>
         </div>
-
-        <!-- Second block for security, participants, and chat -->
         <div class="main__controls__block">
           <div class="main__controls__button">
             <i class="fas fa-shield-alt"></i>
@@ -75,7 +76,6 @@
           </div>
         </div>
 
-        <!-- Third block for leave meeting -->
         <div class="main__controls__block">
           <div class="main__controls__button leave_meeting">
             <span class="leave-meeting">Leave Meeting</span>
@@ -83,15 +83,12 @@
         </div>
       </div>
 
-      <!-- Right section for chat -->
       <div class="main__right">
         <div class="main__header">
           <h4>Chat</h4>
         </div>
         <div class="main__chat_window">
-          <ul class="messages">
-            <!-- Chat messages will go here -->
-          </ul>
+          <ul class="messages"></ul>
           <div class="main__message_container">
             <input
               type="text"
