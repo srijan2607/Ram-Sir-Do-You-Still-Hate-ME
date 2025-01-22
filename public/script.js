@@ -1,11 +1,11 @@
-const socket = io("http://localhost:9000");
+const socket = io("/");
 const videoGrid = document.getElementById("Video-grid");
 const myVideo = document.createElement("video");
 myVideo.muted = true;
 
 var peer = new Peer(undefined, {
   path: "/peerjs",
-  host: "localhost",
+  host: "/",
   port: 9000,
   debug: 3, // Added debug mode
 });
@@ -35,6 +35,17 @@ navigator.mediaDevices
       console.log("New user connected:", userId);
       connectToNewUser(userId, stream);
     });
+    $("html").keydown((e) => {
+      if (e.which == 13 && text.val().length !== 0) {
+        console.log(text.val());
+        socket.emit("message", text.val());
+        text.val(" ");
+      }
+    });
+
+    socket.on("createMessage", (message) => {
+      $("ul").append(`<li class = "message"><b>user</b><br/>${message}</li>`);
+    });
   });
 
 peer.on("open", (id) => {
@@ -63,5 +74,7 @@ const addVideoStream = (video, stream) => {
     video.play();
   });
   videoGrid.append(video);
-  console.log("Added video stream to grid");
 };
+
+let text = $("input");
+console.log(text.val());

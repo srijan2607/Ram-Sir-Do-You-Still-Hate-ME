@@ -30,9 +30,11 @@ io.on("connection", (socket) => {
   socket.on("join-room", (roomId, userId) => {
     socket.join(roomId);
     socket.to(roomId).emit("user-connected", userId);
+    socket.on("message", (message) => {
+      io.to(roomId).emit("createMessage", message);
+    });
   });
 });
-
 const port = process.env.PORT || 9000;
 server.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
