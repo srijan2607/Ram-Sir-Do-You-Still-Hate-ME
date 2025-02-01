@@ -17,7 +17,7 @@ let myVideoStream;
 navigator.mediaDevices
   .getUserMedia({
     video: true,
-    audio: true,
+    audio: false,
   })
   .then((stream) => {
     console.log("Got local stream");
